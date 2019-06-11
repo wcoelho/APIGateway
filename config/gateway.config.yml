@@ -1,0 +1,48 @@
+http:
+  port: 8080
+  host: localhost
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  userAPI:
+    host: 'localhost'
+    paths: 
+      - '/'
+      - '/api/v1/usuarios*'
+      - '/api/v1/avaliacoes*'
+  musicAPI:
+    host: 'localhost'
+    paths: 
+      - '/api/v1/musicas*'
+      - '/api/v1/letras*'
+      - '/api/v1/artistas*'
+serviceEndpoints:
+  userService:
+    url: 'https://localhost:5001'
+  musicService:
+    url: 'https://localhost:3001'
+policies:
+  - cors
+  - expression
+  - key-auth
+  - proxy
+pipelines:
+  - name: user
+    apiEndpoints:
+      - userAPI
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+        #- key-auth:
+        - proxy:
+            - action:
+                serviceEndpoint: userService
+  - name: music
+    apiEndpoints:
+      - musicAPI
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+        #- key-auth:
+        - proxy:
+            - action:
+                serviceEndpoint: musicService
