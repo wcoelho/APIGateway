@@ -1,5 +1,5 @@
 http:
-  port: 8080
+  port: 6001
   host: localhost
 admin:
   port: 9876
@@ -17,9 +17,10 @@ apiEndpoints:
       - '/api/v1/musicas*'
       - '/api/v1/letras*'
       - '/api/v1/artistas*'
+      - '/api/v1/playlists*'
 serviceEndpoints:
   userService:
-    url: 'https://localhost:5001'
+    url: 'http://localhost:5000'
   musicService:
     url: 'https://localhost:3001'
 policies:
